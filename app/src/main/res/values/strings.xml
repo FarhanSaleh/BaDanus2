@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">BaDanus</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sell_name">Nama Jualan</string>
+    <string name="sell_count">Jumlah: </string>
+    <string name="sell_price">Harga: Rp</string>
+
+    <string-array name="data_name">
+        <item>Banana Roll</item>
+        <item>Pisang Coklat</item>
+        <item>Risoles Mayones</item>
+        <item>Mocktail</item>
+        <item>Roti Bakar</item>
+        <item>Donat Bites</item>
+    </string-array>
+    <integer-array name="data_count">
+        <item>10</item>
+        <item>12</item>
+        <item>11</item>
+        <item>1</item>
+        <item>4</item>
+        <item>9</item>
+    </integer-array>
+    <integer-array name="data_price">
+        <item>10000</item>
+        <item>15000</item>
+        <item>18000</item>
+        <item>5000</item>
+        <item>12000</item>
+        <item>8000</item>
+    </integer-array>
+</resources>
