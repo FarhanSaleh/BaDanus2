@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "558219823411",
+    "project_id": "badanus-ce760",
+    "storage_bucket": "badanus-ce760.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558219823411:android:02eacda2f4da59d8d01646",
+        "android_client_info": {
+          "package_name": "com.farhan.badanus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7Xdhf_ylzuGqNjiGDNnohRh-tdjedFD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

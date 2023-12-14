@@ -4,14 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.farhan.badanus.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    FirebaseAuth auth;
+    FirebaseUser user;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -36,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(MainActivity.this, "Selamat datang.",
+                    Toast.LENGTH_SHORT).show();
+        }
 
         binding.nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         if (savedInstanceState == null){

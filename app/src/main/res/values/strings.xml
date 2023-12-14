@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BaDanus</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sell_name">Nama Jualan</string>
-    <string name="sell_count">Jumlah: </string>
-    <string name="sell_price">Harga: Rp</string>
+    <string name="sell_title">Judul Kegiatan</string>
+    <string name="sell_date">Tanggal: </string>
+    <string name="sell_count">Jumlah Pesanan: </string>
 
     <string-array name="data_name">
         <item>Banana Roll</item>
@@ -21,7 +21,7 @@
         <item>4</item>
         <item>9</item>
     </integer-array>
-    <integer-array name="data_price">
+    <integer-array name="data_date">
         <item>10000</item>
         <item>15000</item>
         <item>18000</item>

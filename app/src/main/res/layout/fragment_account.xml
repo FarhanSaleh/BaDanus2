@@ -5,10 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="User" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="20dp">
+        <TextView
+            android:id="@+id/accountName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Nama Akun"
+            android:layout_marginBottom="10dp"
+            android:textSize="20dp"/>
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="log out"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:background="@drawable/my_button_background_warning"/>
+
+    </LinearLayout>
+
 
 </FrameLayout>

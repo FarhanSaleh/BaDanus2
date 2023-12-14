@@ -16,12 +16,12 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/sell_title"
+            android:id="@+id/item_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/sell_title"
+            android:text="Nama Pemesan"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -30,29 +30,33 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            android:id="@+id/sell_date"
-            android:layout_width="50dp"
+            android:id="@+id/item_pesanan"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/sell_date"
+            android:text="Pesanan :"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/sell_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnEditK"/>
-        <TextView
-            android:id="@+id/date_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sell_date"
             android:layout_marginTop="10dp"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/sell_date"
-            app:layout_constraintTop_toBottomOf="@id/sell_title"/>
+            app:layout_constraintTop_toBottomOf="@id/item_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnEdit"
+            app:layout_constraintEnd_toStartOf="@id/pesanan_data"/>
+        <TextView
+            android:id="@+id/pesanan_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pesanan"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+            android:maxLines="5"
+            app:layout_constraintStart_toEndOf="@id/item_pesanan"
+            app:layout_constraintTop_toBottomOf="@id/item_title"
+            app:layout_constraintBottom_toTopOf="@id/btnDelete"/>
         <Button
-            android:id="@+id/btnEditK"
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@drawable/my_button_background"
@@ -60,12 +64,12 @@
             android:layout_marginTop="10dp"
             android:text="Edit"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/sell_date"
+            app:layout_constraintTop_toBottomOf="@id/item_pesanan"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
         <Button
-            android:id="@+id/btnDeleteK"
+            android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@drawable/my_button_background_warning"
@@ -73,8 +77,8 @@
             android:layout_marginTop="10dp"
             android:text="Delete"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/date_data"
-            app:layout_constraintStart_toEndOf="@id/btnEditK"
+            app:layout_constraintTop_toBottomOf="@id/pesanan_data"
+            app:layout_constraintStart_toEndOf="@id/btnEdit"
             app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

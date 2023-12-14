@@ -6,8 +6,8 @@
         android:title="Dashboard"/>
     <item
         android:id="@+id/nav_sell"
-        android:icon="@drawable/baseline_list_24"
-        android:title="Penjualan"/>
+        android:icon="@drawable/wallet2"
+        android:title="Kegiatan"/>
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/baseline_person_outline_24"
