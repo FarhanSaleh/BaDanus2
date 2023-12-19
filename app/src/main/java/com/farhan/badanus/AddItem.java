@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,13 +30,15 @@ import java.util.Map;
 
 public class AddItem extends AppCompatDialogFragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = user.getUid();
     String idDoc;
     public AddItem(String id){
         this.idDoc = id;
     }
 
     String idX;
-    String nama, pesanan;
+    String nama, pesanan, noWa;
     public void setId(String id){
         this.idX = id;
     }
@@ -44,6 +48,9 @@ public class AddItem extends AppCompatDialogFragment {
     public void setPesanan(String pesanan){
         this.pesanan = pesanan;
     }
+    public void setNo(String noWa){
+        this.noWa = noWa;
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -52,19 +59,21 @@ public class AddItem extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_add_item, null);
 
-        EditText edtNama, edtPesanan;
+        EditText edtNama, edtPesanan, edtNo;
         String dialogTitle, dialogKet;
 
         edtNama = view.findViewById(R.id.edt_nama);
         edtPesanan = view.findViewById(R.id.edt_pesanan);
+        edtNo = view.findViewById(R.id.edt_no);
 
         if (idX != null && idX.length()>0){
-            dialogTitle = "Edit Kegiatan";
+            dialogTitle = "Edit Pesanan";
             dialogKet = "memperbarui";
             edtNama.setText(nama);
             edtPesanan.setText(pesanan);
+            edtNo.setText(noWa);
         }else{
-            dialogTitle = "Tambah Kegiatan";
+            dialogTitle = "Tambah Pesanan";
             dialogKet = "menambah";
         }
 
@@ -81,10 +90,11 @@ public class AddItem extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String nama = edtNama.getText().toString();
                         String pesanan = edtPesanan.getText().toString();
+                        String noWa = edtNo.getText().toString();
                         String id = idDoc ;
 
                         if (edtNama.getText().length()>0 && edtPesanan.getText().length()>0){
-                            saveData(nama, pesanan, id);
+                            saveData(nama, noWa, pesanan, id);
                             Toast.makeText(getActivity(), "Berhasil "+dialogKet+" Pesanan",
                                     Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
@@ -92,18 +102,21 @@ public class AddItem extends AppCompatDialogFragment {
                         } else {
                             Toast.makeText(getActivity(), "Isi Pesanan",
                                     Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                             getActivity().recreate();
                         }
                     }
                 });
         return builder.create();
     }
-    private void saveData(String nama, String pesan, String id){
-        DocumentReference parentDocumentRef = db.collection("kegiatan").document(id);
+    private void saveData(String nama, String noWa, String pesan, String id){
+        DocumentReference parentDocumentRef = db.collection("users").document(userId).collection("kegiatan").document(id);
         CollectionReference subCollectionRef = parentDocumentRef.collection("pesanan");
+
         Map<String, Object> pesanan = new HashMap<>();
         pesanan.put("Nama Pemesan", nama);
         pesanan.put("Pesanan", pesan);
+        pesanan.put("NoWa", noWa);
 
 
         if (idX != null && idX.length()>0){

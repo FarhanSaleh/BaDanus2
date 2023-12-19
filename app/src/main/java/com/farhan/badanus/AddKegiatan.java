@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,6 +35,8 @@ public class AddKegiatan extends AppCompatDialogFragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String id;
     String title;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = user.getUid();
     public void setId(String id){
         this.id = id;
     }
@@ -43,7 +47,7 @@ public class AddKegiatan extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder (getContext());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_add_kegiatan, null);
@@ -108,7 +112,7 @@ public class AddKegiatan extends AppCompatDialogFragment {
         kegiatan.put("deadline", deadline);
 
         if (id != null && id.length()>0){
-            db.collection("kegiatan").document(id)
+            db.collection("users").document(userId).collection("kegiatan").document(id)
                     .set(kegiatan)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -116,7 +120,7 @@ public class AddKegiatan extends AppCompatDialogFragment {
                         }
                     });
         }else{
-            db.collection("kegiatan")
+            db.collection("users").document(userId).collection("kegiatan")
                     .add(kegiatan)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override

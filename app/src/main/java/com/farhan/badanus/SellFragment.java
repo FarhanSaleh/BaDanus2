@@ -22,6 +22,8 @@ import com.farhan.badanus.adapter.SellAdapter;
 import com.farhan.badanus.model.SellItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,6 +35,8 @@ import java.util.List;
 
 public class SellFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = user.getUid();
     private RecyclerView sellRecyclerView;
     private List<SellItem> list = new ArrayList<>();
     private SellAdapter sellAdapter;
@@ -62,7 +66,7 @@ public class SellFragment extends Fragment {
         sellAdapter.setOnDelClickCallback(this::delData);
 
         progressDialog.show();
-        db.collection("kegiatan")
+        db.collection("users").document(userId).collection("kegiatan")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @SuppressLint("NotifyDataSetChange")
@@ -107,7 +111,7 @@ public class SellFragment extends Fragment {
     }
     private void delData(SellItem sellItem){
         String id = sellItem.getSellId();
-        db.collection("kegiatan").document(id)
+        db.collection("users").document(userId).collection("kegiatan").document(id)
                 .delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

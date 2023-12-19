@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,8 @@ import com.farhan.badanus.model.ItemModel;
 import com.farhan.badanus.model.SellItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,6 +36,8 @@ import java.util.List;
 
 public class DetailSellActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = user.getUid();
     private RecyclerView itemRecyclerView;
     private List<ItemModel> list = new ArrayList<>();
     private ItemAdapter itemAdapter;
@@ -66,7 +73,7 @@ public class DetailSellActivity extends AppCompatActivity {
 
         addButton = findViewById(R.id.btnAddItem);
 
-        DocumentReference parentDocumentRef = db.collection("kegiatan").document(id);
+        DocumentReference parentDocumentRef = db.collection("users").document(userId).collection("kegiatan").document(id);
         CollectionReference subCollectionRef = parentDocumentRef.collection("pesanan");
 
         subCollectionRef
@@ -78,7 +85,7 @@ public class DetailSellActivity extends AppCompatActivity {
                         list.clear();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ItemModel itemModel = new ItemModel(document.getString("Nama Pemesan"), document.getString("Pesanan"), document.getId());
+                                ItemModel itemModel = new ItemModel(document.getString("Nama Pemesan"), document.getString("Pesanan"), document.getString("NoWa"), document.getId());
                                 list.add(itemModel);
                             }
                             itemAdapter.notifyDataSetChanged();
@@ -101,21 +108,51 @@ public class DetailSellActivity extends AppCompatActivity {
 
     private void showOption(ItemModel itemModel)
     {
-        Toast.makeText(getApplicationContext(), "Kamu memilih "+ itemModel.getNama(), Toast.LENGTH_SHORT).show();
+        String url = "https://api.whatsapp.com/send?phone="+itemModel.getNoWa();
+        try {
+            PackageManager pm = getApplicationContext().getPackageManager();
+            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        } catch (PackageManager.NameNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        }
+//        boolean installed = appInstalledOrNot("com.whatsapp");
+//        if (installed){
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+62"+itemModel.getNoWa()+"&text="+""));
+//            startActivity(intent);
+//        }else {
+//            Toast.makeText(DetailSellActivity.this, "Whatsapp not installed"+itemModel.getNoWa(), Toast.LENGTH_SHORT).show();
+//        }
     }
 
+    private boolean appInstalledOrNot(String url){
+        PackageManager packageManager = getPackageManager();
+        boolean app_installed;
+        try {
+            packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }catch (PackageManager.NameNotFoundException e){
+            app_installed = false;
+        }
+        return app_installed;
+    }
     private void editData(ItemModel itemModel){
         AddItem addItem = new AddItem(id);
         String id = itemModel.getIdItem();
         String name = itemModel.getNama();
         String pesanan = itemModel.getPesanan();
+        String noWa = itemModel.getNoWa();
         addItem.setId(id);
         addItem.setNama(name);
         addItem.setPesanan(pesanan);
+        addItem.setNo(noWa);
         addItem.show(getSupportFragmentManager(),"Tambah Kegiatan");
     }
     private void delData(ItemModel itemModel){
-        DocumentReference parentDocumentRef = db.collection("kegiatan").document(id);
+        DocumentReference parentDocumentRef = db.collection("users").document(userId).collection("kegiatan").document(id);
         CollectionReference subCollectionRef = parentDocumentRef.collection("pesanan");
 
         String id = itemModel.getIdItem();
