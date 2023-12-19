@@ -32,7 +32,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
     <TextView
         android:id="@+id/sell_name"
         android:layout_width="wrap_content"

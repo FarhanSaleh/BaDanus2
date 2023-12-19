@@ -34,8 +34,15 @@ public class AddItem extends AppCompatDialogFragment {
     }
 
     String idX;
+    String nama, pesanan;
     public void setId(String id){
         this.idX = id;
+    }
+    public void setNama(String nama){
+        this.nama = nama;
+    }
+    public void setPesanan(String pesanan){
+        this.pesanan = pesanan;
     }
     @NonNull
     @Override
@@ -54,6 +61,8 @@ public class AddItem extends AppCompatDialogFragment {
         if (idX != null && idX.length()>0){
             dialogTitle = "Edit Kegiatan";
             dialogKet = "memperbarui";
+            edtNama.setText(nama);
+            edtPesanan.setText(pesanan);
         }else{
             dialogTitle = "Tambah Kegiatan";
             dialogKet = "menambah";
@@ -78,9 +87,12 @@ public class AddItem extends AppCompatDialogFragment {
                             saveData(nama, pesanan, id);
                             Toast.makeText(getActivity(), "Berhasil "+dialogKet+" Pesanan",
                                     Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            getActivity().recreate();
                         } else {
                             Toast.makeText(getActivity(), "Isi Pesanan",
                                     Toast.LENGTH_SHORT).show();
+                            getActivity().recreate();
                         }
                     }
                 });

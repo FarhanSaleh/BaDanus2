@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else{
-            Toast.makeText(MainActivity.this, "Selamat datang.",
-                    Toast.LENGTH_SHORT).show();
+
         }
 
         binding.nav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);

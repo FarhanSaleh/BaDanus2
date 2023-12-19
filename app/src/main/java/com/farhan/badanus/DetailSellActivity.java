@@ -107,7 +107,11 @@ public class DetailSellActivity extends AppCompatActivity {
     private void editData(ItemModel itemModel){
         AddItem addItem = new AddItem(id);
         String id = itemModel.getIdItem();
+        String name = itemModel.getNama();
+        String pesanan = itemModel.getPesanan();
         addItem.setId(id);
+        addItem.setNama(name);
+        addItem.setPesanan(pesanan);
         addItem.show(getSupportFragmentManager(),"Tambah Kegiatan");
     }
     private void delData(ItemModel itemModel){

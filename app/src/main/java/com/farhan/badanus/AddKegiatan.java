@@ -32,8 +32,12 @@ import java.util.Map;
 public class AddKegiatan extends AppCompatDialogFragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String id;
+    String title;
     public void setId(String id){
         this.id = id;
+    }
+    public void setTitle(String title){
+        this.title = title;
     }
 
     @NonNull
@@ -60,6 +64,7 @@ public class AddKegiatan extends AppCompatDialogFragment {
         if (id != null && id.length()>0){
             dialogTitle = "Edit Kegiatan";
             dialogKet = "memperbarui";
+            edtTitle.setText(title);
         }else{
             dialogTitle = "Tambah Kegiatan";
             dialogKet = "menambah";
@@ -85,9 +90,12 @@ public class AddKegiatan extends AppCompatDialogFragment {
                             saveData(title, selectedYear + "-"+selectedMonth+"-"+selectedDayOfMonth);
                             Toast.makeText(getActivity(), "Berhasil "+ dialogKet +" Kegiatan",
                                     Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            getActivity().recreate();
                         } else {
                             Toast.makeText(getActivity(), "Isi Nama Kegiatan",
                                     Toast.LENGTH_SHORT).show();
+                            getActivity().recreate();
                         }
                     }
                 });

@@ -100,7 +100,9 @@ public class SellFragment extends Fragment {
     private void editData(SellItem sellItem){
         AddKegiatan addKegiatan = new AddKegiatan();
         String id = sellItem.getSellId();
+        String title = sellItem.getSellName();
         addKegiatan.setId(id);
+        addKegiatan.setTitle(title);
         addKegiatan.show(getActivity().getSupportFragmentManager(),"Tambah Kegiatan");
     }
     private void delData(SellItem sellItem){

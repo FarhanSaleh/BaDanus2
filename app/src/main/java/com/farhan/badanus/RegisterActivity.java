@@ -90,11 +90,24 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterActivity.this, "Akun berhasil dibuat.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                Toast.makeText(RegisterActivity.this, "Akun berhasil dibuat, cek email anda",
+                                                        Toast.LENGTH_SHORT).show();
+                                                edtEmail.setText("");
+                                                edtPw.setText("");
+                                                edtConfPw.setText("");
+                                            }else{
+                                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+//                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
